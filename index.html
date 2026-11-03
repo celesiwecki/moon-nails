@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moon Nails · Sistema de Gestión</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf5fa;--card:#fff;--ink:#2b1a33;--mut:#7d6a86;--line:#eadcee;--berry:#b8317f;--lilac:#ece0fb;--in:#1f8f6a;--out:#d2455f;--soft:#f6e6f1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1220;--card:#271a2d;--ink:#f6ebf8;--mut:#b7a3bf;--line:#3b2a43;--berry:#ee7ab8;--lilac:#3a2a52;--in:#4fd1a1;--out:#ff7d93;--soft:#3a2540}}
+:root[data-theme="dark"]{--bg:#1b1220;--card:#271a2d;--ink:#f6ebf8;--mut:#b7a3bf;--line:#3b2a43;--berry:#ee7ab8;--lilac:#3a2a52;--in:#4fd1a1;--out:#ff7d93;--soft:#3a2540}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Nunito,system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 90px}
+h1{font:400 34px/1.1 "DM Serif Display",Georgia,serif;margin:6px 0 2px}
+h2{font:400 22px "DM Serif Display",Georgia,serif;margin:22px 0 10px}
+.sub{color:var(--mut);margin:0 0 16px}
+nav{display:flex;gap:4px;background:var(--lilac);padding:5px;border-radius:999px;margin:14px 0}
+nav button{flex:1;border:0;background:none;color:var(--ink);font:800 14px Nunito,sans-serif;padding:10px 4px;border-radius:999px;cursor:pointer;text-align:center}
+nav button.on{background:var(--berry);color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.big{grid-column:1/-1;background:var(--berry);color:#fff;border:0}
+.big .l{color:#ffe6f3}
+.l{font-size:13px;color:var(--mut);font-weight:600}
+.n{font:400 26px "DM Serif Display",Georgia,serif}
+.in{color:var(--in)}.out{color:var(--out)}
+.bar{height:12px;background:var(--lilac);border-radius:99px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--berry);border-radius:99px}
+.big .bar{background:rgba(255,255,255,.3)}.big .bar i{background:#fff}
+form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+form .w{grid-column:1/-1}
+input,select{width:100%;font:600 16px Nunito,sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--berry);outline-offset:1px}
+.btn{border:0;background:var(--berry);color:#fff;font:800 16px Nunito,sans-serif;padding:12px 16px;border-radius:12px;cursor:pointer;text-align:center;text-decoration:none;display:inline-block}
+.btn.g{background:var(--lilac);color:var(--ink)}
+.seg4{display:grid;grid-template-columns:1fr 1fr;gap:6px}.seg4 button{padding:11px 8px;font-size:15px}.card small{color:var(--mut);display:block}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row small{color:var(--mut);display:block}
+.x{background:none;border:0;color:var(--mut);font-size:20px;cursor:pointer;padding:4px 8px}
+.tip{background:var(--soft);border-radius:16px;padding:14px 16px;margin-top:12px}
+.empty{color:var(--mut);text-align:center;padding:18px}
+.tag{display:inline-block;background:var(--lilac);border-radius:99px;font-size:12px;font-weight:800;padding:2px 10px}
+.hide{display:none}
+.center-box{text-align:center;padding:40px 20px}
+.logo-circle{width:90px;height:90px;background:var(--berry);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 40px "DM Serif Display",serif;margin:0 auto 20px;box-shadow:0 10px 25px rgba(184,49,127,0.3)}
+</style>
+</head>
+<body>
+<main>
+
+<!-- VISTA 1: INICIO / LANDING CON LOGO -->
+<section id="view-home" class="center-box">
+<div class="logo-circle">🌙</div>
+<h1>Moon Nails</h1>
+<p class="sub">Sistema integral de gestión financiera y legajos profesionales.</p>
+<div class="card" style="margin-top: 30px;">
+<p style="margin-top:0">Bienvenido al sistema operativo del estudio. Ingresá para administrar la caja, las deudas y las clientas.</p>
+<button class="btn w" id="go-login-btn" style="margin-top: 10px;">Ingresar al Sistema</button>
+</div>
+</section>
+
+<!-- VISTA 2: LOGIN -->
+<section id="view-login" class="hide center-box">
+<div class="logo-circle">🔒</div>
+<h1>Acceso Restringido</h1>
+<p class="sub">Ingresá tu contraseña de seguridad para continuar.</p>
+<div class="card" style="max-width: 400px; margin: 20px auto 0;">
+<form id="login-form">
+<input id="login-pass" type="password" class="w" placeholder="Contraseña (ej: 1234)" required>
+<button type="submit" class="btn w">Desbloquear sistema</button>
+<button type="button" class="btn g w" id="back-home-btn" style="margin-top:6px">Volver al inicio</button>
+</form>
+<small id="login-error" class="out hide" style="margin-top: 10px;">Contraseña incorrecta.</small>
+</div>
+</section>
+
+<!-- VISTA 3: APLICACIÓN PRINCIPAL (DASHBOARD) -->
+<div id="view-app" class="hide">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>
+<h1>Mis cuentas</h1>
+<p class="sub">Control total de tu estudio y deudas.</p>
+</div>
+<button class="btn g" id="logout-btn" style="padding: 6px 12px; font-size: 13px;">Salir</button>
+</div>
+
+<nav>
+<button data-t="res" class="on">Resumen</button>
+<button data-t="mov">Movimientos</button>
+<button data-t="clt">Clientas</button>
+<button data-t="deu">Deudas</button>
+</nav>
+
+<section id="res"></section>
+
+<section id="mov" class="hide">
+<div class="card">
+<form id="fm">
+<div class="w seg4"><button type="button" class="btn" data-ty="svc">Cobré servicio</button><button type="button" class="btn g" data-ty="loc">Gasto local</button><button type="button" class="btn g" data-ty="per">Gasto personal</button><button type="button" class="btn g" data-ty="lul">Pago a Luli</button></div>
+<input id="m-client" class="w" placeholder="Nombre y apellido de la clienta" required>
+<input id="m-amt" type="number" inputmode="decimal" min="0" placeholder="Monto total $" required>
+<input id="m-seña" type="number" inputmode="decimal" min="0" placeholder="Seña / Adelanto $ (opcional)">
+<select id="m-pay" class="w">
+    <option value="Efectivo">Efectivo</option>
+    <option value="Transferencia">Transferencia</option>
+    <option value="Mercado Pago">Mercado Pago</option>
+    <option value="Tarjeta">Tarjeta</option>
+</select>
+<input id="m-date" type="date" required>
+<select id="m-who" class="w"><option value="yo">Lo hice yo</option><option value="luli">Lo hizo Luli</option></select><select id="m-cat" class="w"></select><small class="w sub" style="margin:0">En cada servicio, el 50% es para quien lo hizo y el 50% queda en caja.</small>
+<input id="m-desc" class="w" placeholder="Detalle (opcional)">
+<button class="btn w" type="submit">Guardar movimiento</button>
+</form>
+</div>
+<h2>Últimos movimientos</h2>
+<div class="card" id="m-list"></div>
+</section>
+
+<section id="clt" class="hide">
+<h2>Legajo de Clientas</h2>
+<p class="sub">Historial de visitas, señas y servicios por cada clienta.</p>
+<div id="client-list"></div>
+</section>
+
+<section id="deu" class="hide">
+<div class="card">
+<form id="fd">
+<input id="d-name" class="w" placeholder="¿A quién le debés? (tarjeta, préstamo…)" required>
+<input id="d-tot" type="number" inputmode="decimal" min="1" placeholder="Cuánto debés hoy $" required>
+<input id="d-min" type="number" inputmode="decimal" min="0" placeholder="Cuota mensual $">
+<input id="d-day" class="w" type="number" min="1" max="31" placeholder="Día que vence (1 a 31)">
+<button class="btn w" type="submit">Agregar deuda</button>
+</form>
+</div>
+<div id="d-plan"></div>
+<div id="d-list"></div>
+</section>
+</div>
+
+</main>
+
+<script>
+(function(){
+var API="http://127.0.0.1:8000/api", S={tx:[],debts:[]}, ty="svc";
+var $=function(i){return document.getElementById(i)};
+var money=function(n){return new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(n||0)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var uid=function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)};
+var today=function(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+var CATS={svc:["Semipermanente","Esmaltado común","Esculpidas / kapping","Nail art","Retoque","Otro servicio"],loc:["Insumos","Alquiler","Servicios (luz, internet)","Publicidad","Otro del local"],per:["Gastos personales","Comida","Transporte","Otro personal"],lul:["Pago a Luli"]};
+
+// GESTIÓN DE VISTAS (Inicio -> Login -> App)
+function showView(viewId){
+    $("view-home").classList.add("hide");
+    $("view-login").classList.add("hide");
+    $("view-app").classList.add("hide");
+    $(viewId).classList.remove("hide");
+}
+
+$("go-login-btn").onclick = function(){ showView("view-login"); };
+$("back-home-btn").onclick = function(){ showView("view-home"); };
+
+$("login-form").onsubmit = function(e){
+    e.preventDefault();
+    var pass = $("login-pass").value;
+    // Contraseña por defecto "1234" (puedes cambiarla aquí mismo cuando quieras)
+    if(pass === "1234"){
+        $("login-pass").value = "";
+        $("login-error").classList.add("hide");
+        showView("view-app");
+        loadData();
+    } else {
+        $("login-error").classList.remove("hide");
+    }
+};
+
+$("logout-btn").onclick = function(){
+    showView("view-home");
+};
+
+function fillCats(){
+var esServicio = (ty === "svc");
+$("m-client").classList.toggle("hide", !esServicio);
+$("m-client").required = esServicio;
+$("m-who").classList.toggle("hide", !esServicio);
+$("m-cat").classList.toggle("hide", ty === "lul");
+$("m-cat").innerHTML=CATS[ty].map(function(c){return"<option>"+c+"</option>"}).join("")
+}
+
+var mon=function(){return today().slice(0,7)};
+function monthTx(){return S.tx.filter(function(t){return t.date.slice(0,7)===mon()})}
+function left(d){return Math.max(0,d.total-d.paid)}
+var SHARE=0.5,LBL={svc:"Servicio",loc:"Local",per:"Personal",lul:"Pago a Luli"};
+function tl(t){return LBL[t.type]+(t.type==="svc"?(t.who==="luli"?" de Luli":" mío"):"")+" · "}
+
+async function loadData(){
+try{
+var rTx=await fetch(API+"/transactions"); S.tx=await rTx.json();
+var rDb=await fetch(API+"/debts"); S.debts=await rDb.json();
+all();
+}catch(e){console.error("Error al conectar con la API:", e);}
+}
+
+function calc(a){var r={fact:0,mio:0,luli:0,loc:0,per:0,pagL:0,ci:0};
+a.forEach(function(t){if(t.type==="svc"){var s=t.amt*SHARE;r.fact+=t.amt;t.who==="luli"?r.luli+=s:r.mio+=s;r.ci+=t.amt-s}else if(t.type==="loc")r.loc+=t.amt;else if(t.type==="per")r.per+=t.amt;else if(t.type==="lul")r.pagL+=t.amt});
+r.caja=r.ci-r.loc;r.mioNeto=r.mio-r.per;r.debeLuli=r.luli-r.pagL;return r}
+
+function renderRes(){
+var cA=calc(S.tx),cM=calc(monthTx()),tot=0,paid=0;
+S.debts.forEach(function(d){tot+=d.total;paid+=d.paid});
+var pct=tot?Math.round(paid/tot*100):0,pend=tot-paid;
+var h='<div class="grid">';
+h+='<div class="card big"><div class="l">Lo que todavía debés</div><div class="n">'+money(pend)+'</div><div class="bar"><i style="width:'+pct+'%"></i></div><div class="l">Ya pagaste el '+pct+'% de tus deudas</div></div>';
+h+='<div class="card"><div class="l">Caja del local</div><div class="n">'+money(cA.caja)+'</div><small>Acumulado, ya sin gastos del local</small></div>';
+h+='<div class="card"><div class="l">Le debés a Luli</div><div class="n">'+money(cA.debeLuli)+'</div><small>Su 50% menos lo que ya le pagaste</small></div>';
+h+='<div class="card"><div class="l">Mi plata este mes</div><div class="n '+(cM.mioNeto>=0?"in":"out")+'">'+money(cM.mioNeto)+'</div><small>Mi 50%: '+money(cM.mio)+' · Personal: '+money(cM.per)+'</small></div>';
+h+='<div class="card"><div class="l">Facturado este mes</div><div class="n">'+money(cM.fact)+'</div><small>Gastos del local: '+money(cM.loc)+'</small></div></div>';
+var act=S.debts.filter(function(d){return left(d)>0});
+if(act.length){
+var now=new Date().getDate();
+var ven=act.filter(function(d){return d.day}).map(function(d){var k=d.day>=now?d.day-now:d.day+30-now;return{d:d,k:k}}).sort(function(a,b){return a.k-b.k}).slice(0,3);
+if(ven.length){h+='<h2>Próximos vencimientos</h2><div class="card">'+ven.map(function(v){return'<div class="row"><div>'+esc(v.d.name)+'<small>'+(v.k===0?"Vence hoy":"En "+v.k+" días")+" · día "+v.d.day+'</small></div><b>'+money(v.d.min||left(v.d))+'</b></div>'}).join("")+'</div>'}
+}
+if(!S.tx.length&&!S.debts.length)h+='<div class="tip">Empezá cargando tus deudas en la pestaña <b>Deudas</b> y después anotá cada servicio en <b>Movimientos</b>.</div>';
+$("res").innerHTML=h}
+
+function renderMov(){
+var l=S.tx.slice().sort(function(a,b){return b.date<a.date?-1:b.date>a.date?1:0}).slice(0,30);
+$("m-list").innerHTML=l.length?l.map(function(t){
+var clientLabel = (t.type === "svc" && t.client_name && t.client_name !== "General") ? "<b>👤 " + esc(t.client_name) + "</b> · " : "";
+var señaText = t.seña ? " · Seña: "+money(t.seña) : "";
+var payText = t.metodo_pago ? " ["+t.metodo_pago+"]" : "";
+return '<div class="row"><div>'+clientLabel+esc(t.cat)+'<small>'+tl(t)+payText+señaText+" · "+t.date.split("-").reverse().join("/")+(t.desc?" · "+esc(t.desc):"")+'</small></div><div><b class="'+(t.type==="svc"?"in":"out")+'">'+(t.type==="svc"?"+":"−")+money(t.amt)+'</b><button class="x" data-del="'+t.id+'" aria-label="Borrar">×</button></div></div>'
+}).join(""):'<div class="empty">Todavía no cargaste nada. Anotá tu primer servicio.</div>'}
+
+function renderClients(){
+var svcs = S.tx.filter(function(t){return t.type === "svc" && t.client_name});
+var map = {};
+svcs.forEach(function(t){
+    var name = t.client_name.trim();
+    if(!map[name]) map[name] = {visits: 0, totalSpent: 0, totalSeña: 0, history: []};
+    map[name].visits++;
+    map[name].totalSpent += t.amt;
+    map[name].totalSeña += (t.seña || 0);
+    map[name].history.push(t);
+});
+
+var clientNames = Object.keys(map).sort();
+var h = "";
+if(clientNames.length === 0){
+    $("client-list").innerHTML = '<div class="empty">Todavía no hay servicios cargados con nombre de clienta.</div>';
+    return;
+}
+
+clientNames.forEach(function(name){
+    var c = map[name];
+    h += '<div class="card" style="margin-bottom:14px">';
+    h += '<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:8px">';
+    h += '<div><b style="font-size:18px">👤 ' + esc(name) + '</b><small>Visitas: ' + c.visits + ' · Total gastado: ' + money(c.totalSpent) + (c.totalSeña > 0 ? ' · Seña acumulada: ' + money(c.totalSeña) : '') + '</small></div>';
+    h += '</div>';
+    
+    c.history.sort(function(a,b){return b.date < a.date ? -1 : b.date > a.date ? 1 : 0}).forEach(function(t){
+        var fechaFormateada = t.date.split("-").reverse().join("/");
+        var senaStr = t.seña ? " (Seña: " + money(t.seña) + ")" : "";
+        var payStr = t.metodo_pago ? " [" + t.metodo_pago + "]" : "";
+        var descStr = t.desc ? " · " + esc(t.desc) : "";
+        h += '<div style="font-size:14px; padding:4px 0; color:var(--mut); display:flex; justify-content:space-between"><span>• ' + fechaFormateada + ' - <b>' + esc(t.cat) + '</b>' + payStr + senaStr + descStr + '</span><b>' + money(t.amt) + '</b></div>';
+    });
+    h += '</div>';
+});
+
+$("client-list").innerHTML = h;
+}
+
+function renderDeu(){
+var act=S.debts.filter(function(d){return left(d)>0}).sort(function(a,b){return left(a)-left(b)});
+var minSum=act.reduce(function(s,d){return s+(d.min||0)},0);
+var extra=calc(monthTx()).mioNeto;
+var plan="";
+if(act.length){
+var f=act[0];
+plan='<div class="tip"><b>Tu plan:</b> pagá todas las cuotas mínimas ('+money(minSum)+' por mes) y todo lo que te sobre mandalo a <b>'+esc(f.name)+'</b> ('+money(left(f))+').</div>'}
+$("d-plan").innerHTML=plan;
+$("d-list").innerHTML=S.debts.length?'<h2>Mis deudas</h2>'+S.debts.slice().sort(function(a,b){return left(a)-left(b)}).map(function(d){
+var p=Math.min(100,Math.round(d.paid/d.total*100)),done=left(d)===0;
+return '<div class="card" style="margin-bottom:10px">' +
+'<div class="row" style="border:0;padding:0">' +
+'<div><b>'+esc(d.name)+'</b>'+(done?' <span class="tag">¡Pagada!</span>':'')+'<small>Total: '+money(d.total)+' · Pagado: '+money(d.paid)+(d.min?" · Cuota "+money(d.min):"")+(d.day?" · vence el "+d.day:"")+'</small></div>' +
+'<div style="display:flex; align-items:center; gap:8px"><b>'+money(left(d))+'</b><button class="btn g" style="padding:4px 8px; font-size:13px" data-pay-debt="'+d.id+'" data-paid="'+d.paid+'" data-tot="'+d.total+'">Abonar</button><button class="x" data-del-debt="'+d.id+'" aria-label="Borrar">×</button></div>' +
+'</div>' +
+'<div class="bar"><i style="width:'+p+'%"></i></div>' +
+'</div>';
+}).join(""):'<div class="empty">Cargá tus deudas arriba.</div>'}
+
+function all(){renderRes();renderMov();renderClients();renderDeu()}
+
+// Manejo de pestañas del Dashboard
+var mainNav = document.querySelector("#view-app nav");
+if(mainNav){
+    mainNav.onclick=function(e){var t=e.target.getAttribute("data-t");if(!t)return;
+    document.querySelectorAll("#view-app nav button").forEach(function(b){b.classList.toggle("on",b===e.target)});
+    ["res","mov","clt","deu"].forEach(function(i){$(i).classList.toggle("hide",i!==t)})};
+}
+
+document.querySelectorAll("[data-ty]").forEach(function(b){b.onclick=function(){ty=b.getAttribute("data-ty");
+document.querySelectorAll("[data-ty]").forEach(function(x){x.classList.toggle("g",x!==b)});fillCats()}});
+
+$("fm").onsubmit=async function(e){
+e.preventDefault();var a=parseFloat($("m-amt").value);if(!(a>0))return;
+var senaVal=parseFloat($("m-seña").value)||0;
+var clientVal = (ty === "svc") ? ($("m-client").value.trim() || "Consumidor Final") : "General";
+var newTx={
+    id:uid(),
+    type:ty,
+    who:$("m-who").value,
+    amt:a,
+    cat:$("m-cat").value,
+    desc:$("m-desc").value.trim(),
+    date:$("m-date").value||today(),
+    seña:senaVal,
+    metodo_pago:$("m-pay").value,
+    client_name:clientVal
+};
+await fetch(API+"/transactions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(newTx)});
+$("m-client").value="";$("m-amt").value="";$("m-seña").value="";$("m-desc").value="";loadData();
+};
+
+$("fd").onsubmit=async function(e){
+e.preventDefault();var t=parseFloat($("d-tot").value);if(!(t>0))return;
+var newDebt={id:uid(),name:$("d-name").value.trim(),total:t,paid:0,min:parseFloat($("d-min").value)||0,day:parseInt($("d-day").value,10)||0};
+await fetch(API+"/debts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(newDebt)});
+$("fd").reset();loadData();
+};
+
+document.body.addEventListener("click", async function(e){
+var idDelTx = e.target.getAttribute("data-del");
+if(idDelTx){
+    await fetch(API+"/transactions/"+idDelTx, { method: "DELETE" });
+    loadData();
+}
+
+var idDelDebt = e.target.getAttribute("data-del-debt");
+if(idDelDebt){
+    await fetch(API+"/debts/"+idDelDebt, { method: "DELETE" });
+    loadData();
+}
+
+var idPayDebt = e.target.getAttribute("data-pay-debt");
+if(idPayDebt){
+    var currentPaid = parseFloat(e.target.getAttribute("data-paid")) || 0;
+    var totalAmt = parseFloat(e.target.getAttribute("data-tot")) || 0;
+    var rest = totalAmt - currentPaid;
+    var montoAbonar = prompt("¿Cuánto querés abonar a esta deuda? (Restan " + rest + "):");
+    if(montoAbonar !== null && montoAbonar.trim() !== ""){
+        var numAbonar = parseFloat(montoAbonar);
+        if(numAbonar > 0){
+            var nuevoPago = currentPaid + numAbonar;
+            await fetch(API+"/debts/"+idPayDebt, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ paid: nuevoPago })
+            });
+            loadData();
+        }
+    }
+}
+});
+
+$("m-date").value=today();fillCats();
+})();
+</script>
+</body>
+</html>
