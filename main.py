@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
@@ -81,13 +82,17 @@ class Debt(BaseModel):
     class Config:
         from_attributes = True
 
-# Modelo para actualizar pagos de deudas
 class DebtUpdate(BaseModel):
     paid: float
 
-@app.get("/")
-def home():
-    return {"mensaje": "¡API de Mis Cuentas Nails con Gestión de Deudas al 100%! 💅"}
+# Ruta para servir la página visual (index.html) directamente desde Render
+@app.get("/", response_class=HTMLResponse)
+def serve_frontend():
+    try:
+        with open("index.html", "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "<h1>Falta el archivo index.html en el repositorio</h1>"
 
 @app.get("/api/transactions", response_model=List[Transaction])
 def get_transactions(db: Session = Depends(get_db)):
